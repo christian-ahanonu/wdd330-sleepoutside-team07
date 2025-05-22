@@ -9,10 +9,12 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
-}
+} 
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -20,4 +22,22 @@ export function setClick(selector, callback) {
     callback();
   });
   qs(selector).addEventListener("click", callback);
+}
+
+// Get product string 
+export function getParam(param) {
+  const queryString = window.location.search; // search query string
+  const urlParams = new URLSearchParams(queryString); // passed into the new URLSearchParams
+  const product = urlParams.get(param) // the search keyword from the query string is retrieved
+  return product;
+}
+
+// template for products
+export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+  const htmlStrings = list.map(template);
+  // if clear is true we need to clear out the contents of the parent.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
