@@ -245,8 +245,9 @@ button {
 /* Product categories styles */
 
 .product-category {
-  display: flex;
-  gap: 100px;
+  display: grid;
+  grid: auto/1fr 1fr;
+  gap: 20px;
   margin: 50px 0;
   justify-content: center;
   align-items: center;
@@ -270,14 +271,20 @@ button {
     margin: auto;
   }
 
-  .mission {
+  /* .mission {
     font-size: 1.2em;
-  }
+  } */
 
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
   }
+
+  .product-category {
+    /* display: grid; */
+    grid: auto/1fr 1fr 1fr 1fr;
+  }
+
 }
 
 footer {
