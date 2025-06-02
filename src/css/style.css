@@ -271,9 +271,9 @@ button {
     margin: auto;
   }
 
-  /* .mission {
+  .mission {
     font-size: 1.2em;
-  } */
+  }
 
   .cart-card {
     font-size: inherit;
@@ -285,6 +285,12 @@ button {
     grid: auto/1fr 1fr 1fr 1fr;
   }
 
+}
+
+@media screen and (min-width: 300px) {
+  .mission {
+      font-size: .9em;
+  }
 }
 
 footer {
