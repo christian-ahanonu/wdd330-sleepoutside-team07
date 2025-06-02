@@ -1,6 +1,7 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
+
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -38,7 +39,7 @@ function productDetailsTemplate(product) {
       <h3 class="divider">${product.NameWithoutBrand}</h3>
       
       <img class="divider"
-          src="${product.Image}"
+          src="${product.Images.PrimaryLarge}"
           alt="${product.NameWithoutBrand}"
       >
 

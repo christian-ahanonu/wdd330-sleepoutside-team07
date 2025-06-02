@@ -34,10 +34,45 @@ export function getParam(param) {
 
 // template for products
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
-  const htmlStrings = list.map(template);
+  const htmlStrings = list.map(template); //list represent json file which is mapped over the template
+
   // if clear is true we need to clear out the contents of the parent.
   if (clear) {
     parentElement.innerHTML = "";
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+
+// Load header and footer to the DOM
+export async function loadHeaderFooter() {
+  
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
+  const headerElement = document.getElementById("headerData");
+  const footerElement = document.getElementById("footerData");
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+
+}
+
+// Render header and footer using template
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+
+  if (callback) {
+    callback(data);
+  }
+}
+
+
+// fetch content based on the path
+export async function loadTemplate(path) {
+  const res = await fetch(path)
+  const template = await res.text()
+  return template;
+}
+
+
