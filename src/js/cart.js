@@ -1,7 +1,14 @@
-import { loadHeaderFooter, getLocalStorage } from "./utils.mjs";
+import {
+  loadHeaderFooter,
+  getLocalStorage,
+  updateCartCount,
+} from "./utils.mjs";
+
 import ShoppingCart from "./ShoppingCart.mjs";
 
-loadHeaderFooter();
+loadHeaderFooter(() => {
+  updateCartCount();
+});
 
 const localStorage = getLocalStorage("so-cart") || [];
 const cartEle = document.querySelector(".product-list-cart");

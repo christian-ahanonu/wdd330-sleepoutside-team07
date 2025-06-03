@@ -45,8 +45,7 @@ export function renderListWithTemplate(template, parentElement, list, position =
 
 
 // Load header and footer to the DOM
-export async function loadHeaderFooter() {
-  
+export async function loadHeaderFooter(callback) {
   const headerTemplate = await loadTemplate("../partials/header.html");
   const footerTemplate = await loadTemplate("../partials/footer.html");
 
@@ -56,6 +55,10 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 
+  // callback fn is called after the header & footer is loaded into the DOM. 
+  if (typeof callback === "function") {
+    callback();
+  }
 }
 
 // Render header and footer using template
@@ -73,6 +76,24 @@ export async function loadTemplate(path) {
   const res = await fetch(path)
   const template = await res.text()
   return template;
+}
+
+
+export function updateCartCount() {
+  const cart = getLocalStorage("so-cart") || [];
+  const storeElem = document.querySelector("#cart-no")
+  
+  if (cart.length != 0) {
+    const count = cart.length;
+    storeElem.textContent = count;
+  }
+  // else {
+  //   storeElem.textContent = "2"
+  // }
+
+  // if (storeElem) {
+  // }
+    
 }
 
 
