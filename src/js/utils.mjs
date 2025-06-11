@@ -36,13 +36,12 @@ export function getParam(param) {
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(template); //list represent json file which is mapped over the template
 
-  // if clear is true we need to clear out the contents of the parent.
+  // if clear is true, clear out the contents of the parent.
   if (clear) {
     parentElement.innerHTML = "";
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
-
 
 // Load header and footer to the DOM
 export async function loadHeaderFooter(callback) {
@@ -87,13 +86,62 @@ export function updateCartCount() {
     const count = cart.length;
     storeElem.textContent = count;
   }
-  // else {
-  //   storeElem.textContent = "2"
-  // }
-
-  // if (storeElem) {
-  // }
-    
 }
 
+
+// export function cartTotal() {
+//   const localStorage = getLocalStorage("so-cart") || [];
+//   const cartTotalParent = document.querySelector(".cart-footer.hide");
+//   const cartTotalEle = document.querySelector(".cart-total");
+
+//   if (localStorage.length == 0) {
+//     cartTotalParent.style.display = "none";
+//   } else {
+
+//     // Calculate total price
+//     let total = 0;
+//     localStorage.forEach((item) => total += Number(item.FinalPrice));
+  
+//     // Display total in two decimal places
+//     if (cartTotalEle) {
+//       cartTotalEle.textContent += `$${total.toFixed(2)}`;
+//     }
+//   }
+
+// }
+
+export function alertMessage(message, scroll = true, duration = 3000) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.innerHTML = `<p>${message}</p> <span>X</span>`;
+  alert.style.display = "flex";
+  alert.style.alignItems = "center";
+  alert.style.justifyContent = "space-between";
+
+
+  // remove alert when span is clicked
+  alert.addEventListener("click", function (e) {
+    if (e.target.tagName == "SPAN") {
+      main.removeChild(this);
+    }
+  });
+
+  const main = document.querySelector("main");
+  main.prepend(alert);
+  // make sure they see the alert by scrolling to the top of the window
+  // we may not always want to do this...so default to scroll=true, but allow it to be passed in and overridden.
+  if (scroll) window.scrollTo(0, 0);
+
+  // left this here to show how you could remove the alert automatically after a certain amount of time.
+  setTimeout(function () {
+    main.removeChild(alert);
+  }, duration);
+}
+
+export function removeAllAlerts() {
+  const alerts = document.querySelectorAll(".alert");
+  // setTimeout(() => {
+  // }, 3000)
+  alerts.forEach((alert) => document.querySelector("main").removeChild(alert));
+}
 

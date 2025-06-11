@@ -1,8 +1,4 @@
-import {
-  loadHeaderFooter,
-  getLocalStorage,
-  updateCartCount,
-} from "./utils.mjs";
+import { loadHeaderFooter, updateCartCount } from "./utils.mjs";
 
 import ShoppingCart from "./ShoppingCart.mjs";
 
@@ -10,11 +6,8 @@ loadHeaderFooter(() => {
   updateCartCount();
 });
 
-const localStorage = getLocalStorage("so-cart") || [];
-const cartEle = document.querySelector(".product-list-cart");
-
-const cart = new ShoppingCart(localStorage, cartEle);
-cart.initCart();
+const cart = new ShoppingCart("so-cart", ".product-list-cart");
+cart.init();
 
 // function renderCartContents() {
 //   const cartItems = getLocalStorage("so-cart") || []; // all items in local storage is retrieved and stored in a variable.

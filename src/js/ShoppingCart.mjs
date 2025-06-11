@@ -1,22 +1,39 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
 
 export default class ShoppingCart {
-  constructor(storage, cartElement) {
-    this.storage = storage;
+  constructor(key, cartElement) {
+    this.key = key;
     this.cartElement = cartElement;
+    this.total = 0;
   }
 
-  initCart() {
-    const cartItems = this.storage; // all items in local storage is retrieved and stored in a variable.
-    // const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    // this.cartElement.innerHTML = htmlItems.join("");
-
-    this.renderCartContents(cartItems)
+  async init() {
+    const list = getLocalStorage(this.key); // all items in local storage is retrieved and stored in a variable.
+    this.calculateListTotal(list)
+    this.renderCartContents(list)
   }
 
-  renderCartContents(cartItems) {
-    renderListWithTemplate(cartItemTemplate, this.cartElement, cartItems)
+  calculateListTotal(list) {
+    if (list) {
+      const amounts = list.map((item) => item.FinalPrice);
+      this.total = amounts.reduce((sum, item) => sum + item); 
+    }
+  }
+
+  renderCartContents() {
+    // renderWithTemplate(cartItemTemplate, this.cartElement);
+    const cartItems = getLocalStorage(this.key) || [];
+    if (cartItems.length === 0) {
+      const hide = document.querySelector(".cart-footer");
+      if (hide) hide.style.display = "none";
+    }
+
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item))
+
+    document.querySelector(this.cartElement).innerHTML = htmlItems.join("");
+    document.querySelector(".cart-total").innerText += `$${this.total.toFixed(2)}`;
+    
   }
 }
 

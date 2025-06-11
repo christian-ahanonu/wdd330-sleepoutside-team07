@@ -2,6 +2,9 @@
 import { renderListWithTemplate } from "./utils.mjs"; 
 
 function productCardTemplate(product) {
+    // const pCategory = document.querySelector(".breadcrumbs")
+    // pCategory.innerHTML += `${product.Id}`
+
     return `
         <li class="product-card">
             <a href="../product_pages/?product=${product.Id}">
@@ -26,10 +29,12 @@ export default class ProductList {
     async init() {
         const list = await this.dataSource.getData(this.category);
         this.renderList(list); // list is the json file
-        document.querySelector("#product-category").textContent =
-          this.category.charAt(0).toUpperCase() + this.category.slice(1);
 
-        // return word.charAt(0).toUpperCase() + word.slice(1);
+        document.querySelector("#product-category").textContent =
+            this.category.charAt(0).toUpperCase() + this.category.slice(1);
+        
+        document.querySelector(".pCategory").textContent =
+            `[${this.category.charAt(0).toUpperCase()}${this.category.slice(1)}]`;
     }
 
     renderList(list) {
